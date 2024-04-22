@@ -15,9 +15,9 @@
 <div class="container my-5">
     <div class="row">
         <div class="col-md-6">
-            <h2 >No Product yet!</h2> <!-- todo check product list size, if it is 0, it always prints No product yet-->
+            <h2 th:if="${productList.size()==0}">No Product yet!</h2> <!-- todo check product list size, if it is 0, it always prints No product yet-->
 
-            <div ><!-- todo check product list size, if it is NOT 0, it will show the created products-->
+            <div th:unless="${productList.size()==0}"><!-- todo check product list size, if it is NOT 0, it will show the created products-->
                 <h2 class="my-5">Products</h2>
                 <table class="table table-striped table-responsive-md">
                     <thead>
@@ -29,21 +29,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr > <!-- todo productList-->
-                        <td ></td><!-- todo product variables-->
-                        <td ></td><!-- todo product variables-->
-                        <td ></td><!-- todo product variables-->
+                    <tr th:each="product : ${productList}"> <!-- todo productList-->
+                        <td th:text="${product.name}"></td><!-- todo product variables-->
+                        <td th:text="${product.price}"></td><!-- todo product variables-->
+                        <td th:text="${product.remainingQuantity}"></td><!-- todo product variables-->
                         <td>
-                            <a class="btn btn-primary">Add Cart<i></i></a> <!-- todo a href with two path variables-->
+                            <a th:href="@{/addToCart/{productId}/{quantity}(productId=${product.id},quantity=${product.remainingQuantity})}" class="btn btn-primary">Add Cart<i></i></a> <!-- todo a href with two path variables-->
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
 
-            <p class="my-5"><a class="btn btn-primary">Create Product<i
+            <p class="my-5"><a th:href="@{/create-form}" class="btn btn-primary">Create Product<i
                     class="fas fa-user-plus ml-2"></i></a></p> <!-- todo create product form page url-->
-            <p class="my-5"><a class="btn btn-primary">See Cart<i class="fas fa-user-plus ml-2"></i></a> <!-- todo cart url-->
+            <p class="my-5"><a th:href="@{/cart}" class="btn btn-primary">See Cart<i class="fas fa-user-plus ml-2"></i></a> <!-- todo cart url-->
             </p>
         </div>
     </div>

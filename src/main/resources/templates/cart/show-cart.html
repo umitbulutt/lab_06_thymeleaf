@@ -13,11 +13,11 @@
 <div class="container my-5">
     <div class="row">
         <div class="col-md-6">
-            <h2 >No Added Product Yet!</h2>  <!-- todo check cart item list size, if it is 0, it always print No Added Product Yet-->
+            <h2 th:if="${cart.cartItemList.size()==0}">No Added Product Yet!</h2>  <!-- todo check cart item list size, if it is 0, it always print No Added Product Yet-->
             <h3> Cart Total Amount</h3>
-            <td ></td>  <!-- todo put cart total amount cart.getCartTotalAmount()-->
+            <td th:text="${cart.cartTotalAmount}"></td>  <!-- todo put cart total amount cart.getCartTotalAmount()-->
 
-            <div > <!-- todo check cart item list size, if it is NOT 0, it will show added products-->
+            <div th:unless="${cart.cartItemList.size()==0}"> <!-- todo check cart item list size, if it is NOT 0, it will show added products-->
                 <h2 class="my-5"></h2>
                 <table class="table table-striped table-responsive-md">
                     <thead>
@@ -29,16 +29,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td ></td> <!-- todo product variables-->
-                        <td ></td><!-- todo product variables-->
-                        <td ></td><!-- todo product variables-->
-                        <td><a>Delete From Cart</a></td> <!-- todo implement delete get request-->
+                    <tr th:each="eachItem :${cart.cartItemList}">
+                        <td th:text="${eachItem.product.name}"></td> <!-- todo product variables-->
+                        <td th:text="${eachItem.quantity}"></td><!-- todo product variables-->
+                        <td th:text="${eachItem.totalAmount}"></td><!-- todo product variables-->
+                        <td><a th:href="@{/delete/{productId}(productId=${eachItem.product.id})}">Delete From Cart</a></td> <!-- todo implement delete get request-->
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="my-5"><a class="btn btn-primary">See Product List<i></i></a></p> <!-- todo see product list page-->
+            <p class="my-5"><a th:href="@{/list}" class="btn btn-primary">See Product List<i></i></a></p> <!-- todo see product list page-->
 
         </div>
     </div>
